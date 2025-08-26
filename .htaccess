@@ -1,0 +1,26 @@
+# Enable PHP error reporting (optional, for debugging)
+php_flag display_errors On
+php_value error_reporting 32767
+
+# Set default file (login page if no file is specified)
+DirectoryIndex index.php login.php
+
+# Protect sensitive files
+<FilesMatch "^(db\.php|config\.php|\.env)">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Allow .php files only
+<Files ~ "\.php$">
+  Order allow,deny
+  Allow from all
+</Files>
+
+# Redirect to HTTPS (InfinityFree supports SSL)
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
